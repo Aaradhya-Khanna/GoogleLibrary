@@ -5,7 +5,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,58 +12,76 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
-
+import com.gtappdevelopers.kotlingfgproject.BookRVAdapter
 
 class MainActivity : AppCompatActivity() {
 
     // on below line we are creating variables.
     lateinit var mRequestQueue: RequestQueue
     lateinit var booksList: ArrayList<BookDetails>
-    lateinit var prog:Button
-    lateinit var history:Button
-    lateinit var commerce:Button
+    lateinit var loadingPB: ProgressBar
+    var str=""
+    lateinit var prog: Button
+    lateinit var his:Button
+    lateinit var comm:Button
     lateinit var law:Button
     lateinit var ai:Button
     lateinit var cps:Button
     lateinit var iot:Button
-    var str=""
-    lateinit var loadingPB: ProgressBar
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main)
+
+        // on below line we are initializing
+        // our variable with their ids.
         loadingPB = findViewById(R.id.idLoadingPB)
         prog=findViewById(R.id.prog)
-        history=findViewById(R.id.his)
-        commerce=findViewById(R.id.comm)
+        his=findViewById(R.id.his)
+        comm=findViewById(R.id.comm)
         law=findViewById(R.id.law)
         ai=findViewById(R.id.ai)
         cps=findViewById(R.id.cps)
         iot=findViewById(R.id.iot)
-        prog.setOnClickListener {
-            str="programming"
+        loadingPB.visibility = View.VISIBLE
+        prog.setOnClickListener()
+        {
+            str="Programming"
             getBooksData(str);
         }
-        history.setOnClickListener {
-            str="history"
+        his.setOnClickListener()
+        {
+            str="History"
             getBooksData(str);
         }
-        ai.setOnClickListener {
-            str="Articial Intelligence"
+        comm.setOnClickListener()
+        {
+            str="Commerce"
             getBooksData(str);
         }
-        cps.setOnClickListener {
-            str="Cyber Physical Systems"
-            getBooksData(str);
-        }
-        iot.setOnClickListener {
-            str="Internet of Things"
-            getBooksData(str);
-        }
-        law.setOnClickListener {
+        law.setOnClickListener()
+        {
             str="Law"
             getBooksData(str);
         }
+        ai.setOnClickListener()
+        {
+            str="Artificial Intelligence"
+            getBooksData(str);
+        }
+        cps.setOnClickListener()
+        {
+            str="Cyber Physical System"
+            getBooksData(str);
+        }
+        iot.setOnClickListener()
+        {
+            str="Internet of things"
+            getBooksData(str);
+        }
+
+
+
     }
 
     private fun getBooksData(searchQuery: String) {
@@ -82,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         // below is the url for getting data from API in json format.
         val url = "https://www.googleapis.com/books/v1/volumes?q=$searchQuery"
 
-        // below line we are  creating a new request queue.
+        // below line we are creating a new request queue.
         val queue = Volley.newRequestQueue(this@MainActivity)
 
         // on below line we are creating a variable for request
@@ -137,7 +154,7 @@ class MainActivity : AppCompatActivity() {
 
                     // below line is use to pass our
                     // array list in adapter class.
-                    val adapter = BookDetails(booksList, this@MainActivity)
+                    val adapter = BookRVAdapter(booksList, this@MainActivity)
 
                     // below line is use to add linear layout
                     // manager for our recycler view.
@@ -154,10 +171,9 @@ class MainActivity : AppCompatActivity() {
             }
 
 
-        },
-            { error ->
+        }, { error ->
             // in this case we are simply displaying a toast message.
-            Toast.makeText(this@MainActivity, "No books", Toast.LENGTH_SHORT)
+            Toast.makeText(this@MainActivity, "No books found..", Toast.LENGTH_SHORT)
                 .show()
         })
         // at last we are adding our
@@ -166,4 +182,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+
+
+
 

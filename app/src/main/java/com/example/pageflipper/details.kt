@@ -1,4 +1,5 @@
 package com.example.pageflipper
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -88,7 +89,7 @@ class details : AppCompatActivity() {
                 // when buy link is empty.
                 Toast.makeText(
                     this@details,
-                    "No option to buy",
+                    "No buy page present for this book",
                     Toast.LENGTH_SHORT
                 ).show()
             }
